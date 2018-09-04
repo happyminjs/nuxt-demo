@@ -44,7 +44,7 @@ For detailed explanation on how things work, checkout the [Nuxt.js docs](https:/
 ``` 
 当然，你也可以自己从头开始创建一个全新的项目，这里就不多说，只是个人觉着starter模板用着真的很方便，目录结构特别清晰，也很符合我们平时的命名习惯和规则~~~
 ### 目录结构
-![目录结构](D://private/nuxt/_doc_img/catalog.png)
+![目录结构](/_doc_img/catalog.png)
 ### 配置
 默认配置涵盖了大部分的场景，也可在nuxt.config.js中覆盖默认配置项
 ###### HTML头部标签
@@ -93,7 +93,9 @@ For detailed explanation on how things work, checkout the [Nuxt.js docs](https:/
 #### 路由
 这可是Nuxt.js的一个亮点。它可以根据pages目录结构，自动生成路由配置。
 假设pages的结构是下边这样的：
+
 ![pages截图](/_doc_img/pages.png)
+
 则会自动生成路由配置：
 ```bash
     router: {
@@ -118,7 +120,9 @@ For detailed explanation on how things work, checkout the [Nuxt.js docs](https:/
 ```
 #### 嵌套路由
 创建与该文件同名的目录存放子视图的组件。
+
 ![嵌套pages](/_doc_img/pages_child.png)
+
 自动生成的路由
 ```bash
     router: {
@@ -185,7 +189,9 @@ pages文件夹下的vue文件中的内容会插入在<nuxt/>中。
     </script>
 ```
 生成页面的结构如下图：
+
 ![布局](/_doc_img/layout.png)
+
 从外到内依次是layouts布局、pages页面、components组件
 #### 自定义布局
 如果想要某一个页面不走默认布局，可以在layouts文件夹下新建布局模板，然后该页面的vue文件中配置layouts，引入此布局模板。
