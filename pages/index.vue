@@ -27,7 +27,7 @@ export default {
 };
 </script>
 
-<style>
+<style >
 .fill-bottom{
 	height: 56px;
 }

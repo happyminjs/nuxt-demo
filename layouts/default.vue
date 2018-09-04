@@ -19,7 +19,9 @@
 
 <style>
 .main_box{
-	min-height: 100%;
+	height: 100%;
+	position: relative;
+	padding-top: 46px;
 }
 .button--green {
 	display: inline-block;

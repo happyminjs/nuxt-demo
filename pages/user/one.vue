@@ -7,8 +7,5 @@ export default {
 }
 </script>
 <style>
-.container{
-    margin: 56px;
-}
 </style>
 
