@@ -17,12 +17,19 @@ module.exports = {
 	/*
 	** Customize the progress bar color
 	*/
-    loading: { color: '#3B8070' },
+	loading: { color: '#3B8070' },
+	/**
+	 * plugins 配置的插件会在应用初始化之前加载导入的
+	 */
     plugins:[
         {
             src:'~/plugins/toast',
             ssr:false
-        }
+		},
+		{
+			src:'~/plugins/vue-notify',
+			ssr: false
+		}
     ],
 	/*
 	** Build configuration
@@ -47,13 +54,14 @@ module.exports = {
 			})
 		}
       },
-      vendor: ['axios']
-	  // babel: {  // 为 JS 和 Vue 文件设定自定义的 babel 配置
-	  //   presets: ['es2015', 'stage-0']
-	  // }
+      vendor: ['axios','~/plugins/vue-notify']
 	},
 	css:[
-		'assets/main.css'
+		'assets/main.css',
+		{
+			src: 'assets/index.scss',
+			lang: 'scss'
+		}
 	]
   }
   

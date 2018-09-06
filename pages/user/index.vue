@@ -1,7 +1,8 @@
 <template>
     <div  class="container">
 		<p>是的，我就是user啊</p>
-		<h1>{{title}}</h1>
+		<h1>这是server： {{thisServer}}</h1>
+		<h2>我是parmars： {{paramssss}}</h2>
 		<p>是的，我就是后来的{{afterData}}</p>
 		<toast-dom></toast-dom>
 	</div>
@@ -10,14 +11,26 @@
 import axios from 'axios';
 import toastDom from '~/plugins/toast.vue'
 export default {
-	async asyncData ({ params }) {
+	async asyncData ({isServer,params,query}) {
 		let { data } = await axios.get('https://wxk-hotwords.daweixinke.com/hotwords?platform=cct_h5');
-		return { title: data.errorMessage }
+		let querydd = '';
+		if(query.plan == 'hengheng'){
+			querydd = query.plan;
+		}else{
+			querydd = '我不是';
+		}
+		return { 
+			title: data.values[1].key,
+			thisServer: isServer,
+			paramssss: querydd
+		}
 	},
 	data () {
 		return {
 			title: '',
-			afterData:''
+			afterData:'',
+			thisServer:'',
+			paramssss:''
 		}
 	},
 	methods: {

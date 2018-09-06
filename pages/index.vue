@@ -9,8 +9,8 @@
 				Nuxt.js project
 			</h2>
 			<div class="links">
-				<a href="/user" class="button--green">user</a>
-				<a href="/user/one" class="button--grey">one</a>
+				<router-link class="button--green" :to="{path:'/user',query:{plan:'hengheng'}}">user</router-link>
+				<router-link class="button--grey" :to="{name:'one',params:{userId:3243}}">one</router-link>
 			</div>
 		</div>
 		<div class="fill-bottom"></div>
@@ -28,6 +28,12 @@ export default {
 </script>
 
 <style >
+.to-user{
+	font-size: 14px;
+	border: 1px solid;
+	padding: 5px 10px;
+	margin: 20px;
+}
 .fill-bottom{
 	height: 56px;
 }

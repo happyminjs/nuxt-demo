@@ -15,7 +15,8 @@
 	"dependencies": {
 		"ajv": "^6.0.0",
 		"axios": "^0.18.0",
-		"nuxt": "^1.0.0"
+		"nuxt": "^1.0.0",
+		"vue-notifyjs": "^0.4.3"
 	},
 	"devDependencies": {
 		"babel-eslint": "^8.2.1",

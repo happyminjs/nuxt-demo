@@ -211,15 +211,125 @@ pages文件夹下的vue文件中的内容会插入在<nuxt/>中。
 可以通过编辑layouts/error.vue文件定制错误页面的样式。一般可以在404,500等错误页面的时候展示。
 #### 异步数据
 nuxt.js增加了asyncData的方法，这个方法是在组件加载之前调用，可以在服务端或者路由更新之前调用。使得我们可以在设置组件的数据之前异步获取或处理数据。
-所以我们也就不可以通过this来引用组件的实例对象了，可以使用上下文对象来实现我们需要的一些功能。
-
+此方法有两个参数，第一个是当前页的上下文对象，可以用来获取数据；第二个参数可以指定回调函数。
+需要注意一点的是我们也就不可以通过this来引用组件的实例对象了，由于是服务端运行，所以也是不存在document、window这些变量的。
+```bash
+    export default {
+        async asyncData ({isServer,query}) {
+            let { data } = await axios.get(`https://58.com/api/${query.id}`);
+            return { 
+                ID: query.id || '00'
+            }
+        }
+    }
+```
+上下文对象context可用的属性看[官方的文档](https://zh.nuxtjs.org/api/)吧
 ### 资源文件
+默认Nuxt会使用webpack的插件vue-loader、file-loader、url-loader来处理文件的加载和引用。
+对于不需要处理的静态文件，放在static目录中。Nuxt启动后，该目录下的文件会映射到此应用的根路径下，所以在代码中可用使用根路径 / 结合资源相对路径来引用静态不需要处理的文件。
+```bash
+    # 引用 static 目录下的图片
+    <img src="/test-img.png"/>
+```
+需要处理的文件则放在assets目录下。
+```bash
+    # 引用 assets 目录下经过webpack处理的图片
+    <img src="/assets/test-img-2.png"/>
+```
 ### 插件
+###### 第三方模块
+以axios为例，首先需要安装npm包
+```bash
+    # 安装axios
+    npm install axios
 
+    # 页面引用和使用
+    import axios from 'axios'
+    export default {
+        async asyncData (){
+            let { data } = await axios.get('http://api/gets/....');
+            return { title: data.title}
+        }
+    }
+```
+需要注意的一点是，如果多个页面都引用了同一个插件，需要在nuxt.config.js中配置build.vendor，否则会打包多次。
+```bash
+    moudle.exports = {
+        build: {
+            vendor: ['axios']
+        }
+    }
+```
+###### vue插件
+以vue-notifyjs为例：
+```bash
+    # 安装vue-notifyjs
+    npm install vue-notifyjs
+    
+    #在plugins文件夹下新建js文件 vue-notify.js，文件内容如下：
+    import Vue from 'vue';
+    import Notify from 'vue-notifyjs';
+    import '../node_modules/vue-notifyjs/themes/default.css'
+    Vue.use(Notify,{
+        type: 'success',
+        timeout: 2000,
+        verticalAlign: 'bottom',
+        horizontalAlign: 'center',
+        showClose: false
+    });
 
+    # 在nuxt.config.js中添加plugins配置，同时为了防止将第三方库打包到应用代码中，需要在vendor添加配置，来将第三方库打包到库文件里，来获得更好一些的缓存效果。
+    moudle.exports = {
+        plugins: [
+            {
+                src:'~/plugins/vue-notify',
+                ssr: false
+            }
+        ],
+        build:{
+            vendor: ['~/plugins/vue-notify']
+        }
+    }
+
+    # 最后在需要插件的vue文件中引入并调用
+    <template>
+        <notifications></notifications>
+    </template>
+    <script>
+        import vueNotify from '~/plugins/vue-notify.js'
+        export default{
+            components: {
+                vueNotify
+            },
+            methods: {
+                addNotification(msg){
+                    this.$notify({
+                        message: msg
+                    })
+                }
+            },
+            mounted () {
+                this.addNotification('哈哈哈');
+            }
+        }
+    </script>
+```
 ### 添加预处理器
+### Vuex状态树
 
+### 最后了，当然得部署服务器了
+###### nuxt
+启动一个热加载的Web服务器（开发模式） localhost:3000。本地开发时用
+###### nuxt build
+利用webpack编译应用，压缩JS和CSS资源
+###### nuxt start
+以生成模式启动一个Web服务器 (需要先执行nuxt build)，  服务端渲染应用部署时用
+###### nuxt generate
+编译应用，并依据路由配置生成对应的HTML文件 (用于静态站点的部署)。  静态应用部署时用，会创建dist文件夹，是所有静态化后的资源文件。
 
+```bash
+
+```
 
 ---------------------------------------
 
