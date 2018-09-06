@@ -291,16 +291,12 @@ nuxt.js增加了asyncData的方法，这个方法是在组件加载之前调用�
         }
     }
 
-    # 最后在需要插件的vue文件中引入并调用
+    # 最后在需要插件的vue文件中直接使用
     <template>
         <notifications></notifications>
     </template>
     <script>
-        import vueNotify from '~/plugins/vue-notify.js'
         export default{
-            components: {
-                vueNotify
-            },
             methods: {
                 addNotification(msg){
                     this.$notify({

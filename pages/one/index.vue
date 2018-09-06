@@ -12,7 +12,6 @@
 <script>
 import axios from 'axios';
 import toastDom from '~/plugins/toast.vue'
-import vueNotify from '~/plugins/vue-notify.js'
 
 export default {
     layouts:'demo_layout',
@@ -25,7 +24,7 @@ export default {
 		}
     },
     components: {
-		toastDom,vueNotify
+        toastDom
 	},
     data(){
         return {
