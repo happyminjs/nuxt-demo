@@ -340,4 +340,4 @@ Nuxt.js提供了下面的四个命令，可以放到package.json中来启动。
 <br />  
 
 >**结束语**  
->Nuxt.js是一个很简单易上手的框架，这篇文章主要是介绍了一下Nuxt.js的使用，希望能够有具体的项目能够落地来展现Nuxt.js的优点。这里有一个很简单的小demo，有兴趣的同学可以看看。
+>Nuxt.js是一个很简单易上手的框架，这篇文章主要是介绍了一下Nuxt.js的使用，希望能够有具体的项目能够落地来展现Nuxt.js的优点。这里有一个很简单的小[demo](https://github.com/happyminjs/nuxt-demo)，有兴趣的同学可以看看。
