@@ -293,9 +293,23 @@ pages文件夹下的vue文件中的内容会插入在<nuxt/>中。
     </script>
 ```
 #### 添加预处理器
-#### Vuex状态树
+以引入scss预处理器为例：
+```bash
+    # 首先当然是安装包了
+    npm install node-sass sass-loader --save-dev
 
-#### 最后了，当然得部署服务器了
+    # nuxt.config.js中添加build配置
+    styleResources: {
+        scss: './assets/*.scss'
+    }
+
+    # vue文件中使用
+    <style lang="scss">
+        ... 
+    </style>
+```
+scss文件是需要webpack编译处理的文件，所以要放到assets目录下。
+#### 最后，当然得部署服务器了
 ###### nuxt
 启动一个热加载的Web服务器（开发模式） localhost:3000。本地开发时用
 ###### nuxt build
@@ -304,5 +318,3 @@ pages文件夹下的vue文件中的内容会插入在<nuxt/>中。
 以生成模式启动一个Web服务器 (需要先执行nuxt build)，  服务端渲染应用部署时用
 ###### nuxt generate
 编译应用，并依据路由配置生成对应的HTML文件 (用于静态站点的部署)。  静态应用部署时用，会创建dist文件夹，是所有静态化后的资源文件。
-
-
