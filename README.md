@@ -1,37 +1,19 @@
-# z-index记录
-1、header和footer是999；
-2、toast是999；
+是不是还在纠结于文件已经加载完了，但是还在等接口的loading；想前后完全分离的同时也想要很好的seo。vue和react都发布了一份完整的构建服务端渲染应用的指南SSR。
+vue的社区团队开发了一个基于SSR的Nuxt.js的框架，让我这们可以很方便快速的来开发服务端渲染的Vue应用。之所以Nuxt.js能实现服务端渲染，是因为它给提供了一个方法asyncData（异步数据）。现在我们就来先了解一下它吧~~
+### asyncData用处
+asyncData方法可以在设置组件的数据之前能异步获取或处理数据。此方法会在页面组件每次加载之前调用，可以在服务端或路由更新之前被调用。
+### 想理解为什么，还是得看一下ssr原理
+先来了解一下构建步骤，看下图：
+![ssr-img](/_doc_img/ssr-img.png)
+SSR有两个入口文件server.js和client.js，webpack通过这两个入口文件将我们的代码打包出两个bundle：
+>[服务器bundle]用于服务端渲染，既SSR，生成首屏HTML；
+>[客户端bundle]会发送给浏览器，用户客户端渲染首屏外的数据和交互处理。
 
-
-
-# nuxt
-
-> Nuxt.js project
-
-## Build Setup
-
-``` bash
-# install dependencies
-$ npm install # Or yarn install
-
-# serve with hot reload at localhost:3000
-$ npm run dev
-
-# build for production and launch server
-$ npm run build
-$ npm start
-
-# generate static project
-$ npm run generate
-```
-
-For detailed explanation on how things work, checkout the [Nuxt.js docs](https://github.com/nuxt/nuxt.js).
-
-
-
-
-### 先来安装创建项目
-官方提供了一个starter模板，方便我们使用，可以直接下载[模板压缩包](https://github.com/nuxt-community/starter-template/archive/master.zip)，也可以使用vue-cli安装，下面是vue-cli安装步骤：
+asyncData方法就是在Node Server中执行，服务器bundle中来处理的。
+在服务器接收到客户端的请求后，会创建一个渲染器Bundle Renderder，这个渲染器会读取Server Bundle并执行，然后生成HTML，同Client Bundle一起生成发送到客户端。
+### 下面就来实践一下Nuxt.js吧
+#### 先来安装创建项目
+官方提供了几个模板，下面以starter模板为例，方便我们使用，可以直接下载[模板压缩包](https://github.com/nuxt-community/starter-template/archive/master.zip)，也可以使用vue-cli安装，下面是vue-cli安装步骤：
 ```bash
     # 安装vue-cli
     npm install -g vue-cli 
@@ -43,10 +25,10 @@ For detailed explanation on how things work, checkout the [Nuxt.js docs](https:/
     npm run dev
 ``` 
 当然，你也可以自己从头开始创建一个全新的项目，这里就不多说，只是个人觉着starter模板用着真的很方便，目录结构特别清晰，也很符合我们平时的命名习惯和规则~~~
-### 目录结构
+#### 目录结构
 ![目录结构](/_doc_img/catalog.png)
-### 配置
-默认配置涵盖了大部分的场景，也可在nuxt.config.js中覆盖默认配置项
+#### 配置
+Nuxt.js的默认配置涵盖了大部分的场景，也可在nuxt.config.js中覆盖默认配置项，下面就说几个常用的配置属性。
 ###### HTML头部标签
 可以在nuxt.config.js配置统一的头部标签，常用的title、meta、script标签
 ```bash
@@ -78,7 +60,6 @@ For detailed explanation on how things work, checkout the [Nuxt.js docs](https:/
 		'assets/main.css'
 	]
 ```
-###### 全局环境设置
 ###### build设置
 常用配置：vendor、extend
 常见将每个页面都用的插件，在此处配置，则就不需要每个页面引入的时候打包多次了。例如axios
@@ -88,14 +69,19 @@ For detailed explanation on how things work, checkout the [Nuxt.js docs](https:/
     }
 ```
 ###### 插件设置plugins
-这里一般是来配置开发的插件，可以设置ssr为false来只在浏览器运行。
-
+这里一般是来配置开发的插件，可以设置ssr为false来只在浏览器运行。例如
+```bash
+    plugins:[
+        {
+            src:'~/plugins/toast',
+            ssr:false
+		}
+    ]
+```
 #### 路由
 这可是Nuxt.js的一个亮点。它可以根据pages目录结构，自动生成路由配置。
 假设pages的结构是下边这样的：
-
 ![pages截图](/_doc_img/pages.png)
-
 则会自动生成路由配置：
 ```bash
     router: {
@@ -120,9 +106,7 @@ For detailed explanation on how things work, checkout the [Nuxt.js docs](https:/
 ```
 #### 嵌套路由
 创建与该文件同名的目录存放子视图的组件。
-
 ![嵌套pages](/_doc_img/pages_child.png)
-
 自动生成的路由
 ```bash
     router: {
@@ -189,9 +173,7 @@ pages文件夹下的vue文件中的内容会插入在<nuxt/>中。
     </script>
 ```
 生成页面的结构如下图：
-
 ![布局](/_doc_img/layout.png)
-
 从外到内依次是layouts布局、pages页面、components组件
 #### 自定义布局
 如果想要某一个页面不走默认布局，可以在layouts文件夹下新建布局模板，然后该页面的vue文件中配置layouts，引入此布局模板。
@@ -210,7 +192,7 @@ pages文件夹下的vue文件中的内容会插入在<nuxt/>中。
 #### 错误页面
 可以通过编辑layouts/error.vue文件定制错误页面的样式。一般可以在404,500等错误页面的时候展示。
 #### 异步数据
-nuxt.js增加了asyncData的方法，这个方法是在组件加载之前调用，可以在服务端或者路由更新之前调用。使得我们可以在设置组件的数据之前异步获取或处理数据。
+这里就是开头说的nuxt.js中的asyncData的方法，这个方法是在组件加载之前调用，可以在服务端或者路由更新之前调用。使得我们可以在设置组件的数据之前异步获取或处理数据。
 此方法有两个参数，第一个是当前页的上下文对象，可以用来获取数据；第二个参数可以指定回调函数。
 需要注意一点的是我们也就不可以通过this来引用组件的实例对象了，由于是服务端运行，所以也是不存在document、window这些变量的。
 ```bash
@@ -224,7 +206,7 @@ nuxt.js增加了asyncData的方法，这个方法是在组件加载之前调用�
     }
 ```
 上下文对象context可用的属性看[官方的文档](https://zh.nuxtjs.org/api/)吧
-### 资源文件
+#### 资源文件
 默认Nuxt会使用webpack的插件vue-loader、file-loader、url-loader来处理文件的加载和引用。
 对于不需要处理的静态文件，放在static目录中。Nuxt启动后，该目录下的文件会映射到此应用的根路径下，所以在代码中可用使用根路径 / 结合资源相对路径来引用静态不需要处理的文件。
 ```bash
@@ -236,7 +218,7 @@ nuxt.js增加了asyncData的方法，这个方法是在组件加载之前调用�
     # 引用 assets 目录下经过webpack处理的图片
     <img src="/assets/test-img-2.png"/>
 ```
-### 插件
+#### 插件
 ###### 第三方模块
 以axios为例，首先需要安装npm包
 ```bash
@@ -305,15 +287,15 @@ nuxt.js增加了asyncData的方法，这个方法是在组件加载之前调用�
                 }
             },
             mounted () {
-                this.addNotification('哈哈哈');
+                this.addNotification('Nuxt.js');
             }
         }
     </script>
 ```
-### 添加预处理器
-### Vuex状态树
+#### 添加预处理器
+#### Vuex状态树
 
-### 最后了，当然得部署服务器了
+#### 最后了，当然得部署服务器了
 ###### nuxt
 启动一个热加载的Web服务器（开发模式） localhost:3000。本地开发时用
 ###### nuxt build
@@ -322,12 +304,5 @@ nuxt.js增加了asyncData的方法，这个方法是在组件加载之前调用�
 以生成模式启动一个Web服务器 (需要先执行nuxt build)，  服务端渲染应用部署时用
 ###### nuxt generate
 编译应用，并依据路由配置生成对应的HTML文件 (用于静态站点的部署)。  静态应用部署时用，会创建dist文件夹，是所有静态化后的资源文件。
-
-```bash
-
-```
-
----------------------------------------
-
 
 
