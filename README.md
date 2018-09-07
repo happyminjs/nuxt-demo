@@ -6,7 +6,7 @@ asyncData方法可以在设置组件的数据之前能异步获取或处理数�
 先来了解一下构建步骤，看下图：  
 ![ssr-img](/_doc_img/ssr-img.png)  
 SSR有两个入口文件server.js和client.js，webpack通过这两个入口文件将我们的代码打包出两个bundle：
->[服务器bundle]用于服务端渲染，既SSR，生成首屏HTML；
+>[服务器bundle]用于服务端渲染，既SSR，生成首屏HTML；  
 >[客户端bundle]会发送给浏览器，用户客户端渲染首屏外的数据和交互处理。
 
 asyncData方法就是在Node Server中执行，服务器bundle中来处理的。
@@ -213,6 +213,8 @@ pages文件夹下的vue文件中的内容会插入在<nuxt/>中。
     }
 ```
 上下文对象context可用的属性看[官方的文档](https://zh.nuxtjs.org/api/)吧
+
+<br />
 <br />
 <br />
 *有上边的，项目都已经可以用了，但是我们总是会想要更好一些的效果，比如不需要编译的文件与需要编译的文件区分开，不要多次打包加载公共插件，那就再继续看看下边的吧*
@@ -323,9 +325,9 @@ scss文件是需要webpack编译处理的文件，所以要放到assets目录下
 <br />
 <br />
 #### 代码写完了，当然得部署服务器了
-Nuxt.js提供了下面的四个命令，可以放到package.json中来启动。
-**nuxt**：启动一个热加载的Web服务器（开发模式） localhost:3000。本地开发时用
-**nuxt build**：利用webpack编译应用，压缩JS和CSS资源
-**nuxt start**：以生成模式启动一个Web服务器 (需要先执行nuxt build)，  服务端渲染应用部署时用
+Nuxt.js提供了下面的四个命令，可以放到package.json中来启动。  
+**nuxt**：启动一个热加载的Web服务器（开发模式） localhost:3000。本地开发时用  
+**nuxt build**：利用webpack编译应用，压缩JS和CSS资源  
+**nuxt start**：以生成模式启动一个Web服务器 (需要先执行nuxt build)，  服务端渲染应用部署时用  
 **nuxt generate**：编译应用，并依据路由配置生成对应的HTML文件 (用于静态站点的部署)。  静态应用部署时用，会创建dist文件夹，是所有静态化后的资源文件。
 至于是选择静态应用部署还是服务端渲染应用部署，那就得要看你的项目实际需求了。
