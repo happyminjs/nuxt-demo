@@ -1,11 +1,8 @@
 <template>
     <div class="container">
-        <div>没错，我是one</div>
-        <h2>路由params参数： {{paramssss}}</h2>
-        <toast-dom></toast-dom>
-
-        <p>vue-notifyjs demo</p>
-        <button @click="showNotify">点我展示vue-notify</button>
+        <p>路由params参数： {{paramssss}}</p>
+        <h4>vue-notifyjs demo:</h4>
+        <button @click="showNotify">点我在底部展示vue-notify</button>
         <notifications></notifications>
     </div>
 </template>

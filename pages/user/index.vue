@@ -1,9 +1,8 @@
 <template>
-    <div  class="container">
-		<p>是的，我就是user啊</p>
-		<h1>这是server： {{thisServer}}</h1>
-		<h2>我是parmars： {{paramssss}}</h2>
-		<p>是的，我就是后来的{{afterData}}</p>
+    <div class="container">
+		<p>是不是server渲染： {{thisServer}}</p>
+		<p>路由parmars： {{paramssss}}</p>
+		<p>客户端获取接口数据后渲染的：{{afterData}}</p>
 		<toast-dom></toast-dom>
 	</div>
 </template>

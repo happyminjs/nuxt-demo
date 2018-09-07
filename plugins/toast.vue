@@ -7,7 +7,7 @@
 export default {
     data () {
         return {
-            toasttext:'aaa哈佛好地方'
+            toasttext:'自定义的toast插件'
         }
     }
 }

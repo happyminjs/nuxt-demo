@@ -1,16 +1,14 @@
 <template>
 	<section class="container">
 		<div id="main-box">
+			<p>自定义组件引入的logo：</p>
 			<app-logo/>
-			<h1 class="title">
-				nuxt
-			</h1>
-			<h2 class="subtitle">
-				Nuxt.js project
-			</h2>
+			<br>
+			<h1 class="title">nuxt</h1>
 			<div class="links">
-				<router-link class="button--green" :to="{path:'/user',query:{plan:'hengheng'}}">user</router-link>
-				<router-link class="button--grey" :to="{name:'one',params:{userId:3243}}">one</router-link>
+				<router-link class="button--green" :to="{path:'/user',query:{plan:'hengheng'}}">带query路由</router-link>
+				<router-link class="button--grey" :to="{name:'one',params:{userId:3243}}">params路由</router-link>
+				<router-link class="button--green" :to="{path:'/user/layout_demo'}">去看自定义模板</router-link>
 			</div>
 		</div>
 		<div class="fill-bottom"></div>
@@ -33,6 +31,8 @@ export default {
 }
 #main-box {
 	position: relative;
+	padding: 20px 10px;
+	text-align: center;
 	.title {
 		font-family: $font-family;
 		display: block;
@@ -50,6 +50,32 @@ export default {
 	}
 	.links {
 		padding-top: 15px;
+		a{
+			display: block;
+			margin-bottom: 10px;
+		}
+		.button--green {
+			border-radius: 4px;
+			border: 1px solid #3b8070;
+			color: #3b8070;
+			text-decoration: none;
+			padding: 10px 20px;
+		}
+		.button--green:hover {
+			color: #fff;
+			background-color: #3b8070;
+		}
+		.button--grey {
+			border-radius: 4px;
+			border: 1px solid #35495e;
+			color: #35495e;
+			text-decoration: none;
+			padding: 10px 20px;
+		}
+		.button--grey:hover {
+			color: #fff;
+			background-color: #35495e;
+		}
 	}
 }
 </style>
