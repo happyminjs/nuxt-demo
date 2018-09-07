@@ -21,25 +21,24 @@
 import AppLogo from "~/components/AppLogo.vue";
 
 export default {
-	components: {
-		AppLogo
-	}
+  components: {
+    AppLogo
+  }
 };
 </script>
 
 <style lang="scss">
-.fill-bottom{
-	height: 56px;
+.fill-bottom {
+  height: 56px;
 }
-#main-box{
+#main-box {
 	position: relative;
 	.title {
-		font-family: "Quicksand", "Source Sans Pro", -apple-system, BlinkMacSystemFont,
-			"Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; /* 1 */
+		font-family: $font-family;
 		display: block;
 		font-weight: 300;
 		font-size: 50px;
-		color: #35495e;
+		color: $font-color;
 		letter-spacing: 1px;
 	}
 	.subtitle {
@@ -53,6 +52,5 @@ export default {
 		padding-top: 15px;
 	}
 }
-
 </style>
 

@@ -3,8 +3,8 @@ vue的社区团队开发了一个基于SSR的Nuxt.js的框架，让我这们可�
 ### asyncData用处
 asyncData方法可以在设置组件的数据之前能异步获取或处理数据。此方法会在页面组件每次加载之前调用，可以在服务端或路由更新之前被调用。
 ### 想理解为什么，还是得看一下ssr原理
-先来了解一下构建步骤，看下图：
-![ssr-img](/_doc_img/ssr-img.png)
+先来了解一下构建步骤，看下图：  
+![ssr-img](/_doc_img/ssr-img.png)  
 SSR有两个入口文件server.js和client.js，webpack通过这两个入口文件将我们的代码打包出两个bundle：
 >[服务器bundle]用于服务端渲染，既SSR，生成首屏HTML；
 >[客户端bundle]会发送给浏览器，用户客户端渲染首屏外的数据和交互处理。
@@ -12,7 +12,7 @@ SSR有两个入口文件server.js和client.js，webpack通过这两个入口文�
 asyncData方法就是在Node Server中执行，服务器bundle中来处理的。
 在服务器接收到客户端的请求后，会创建一个渲染器Bundle Renderder，这个渲染器会读取Server Bundle并执行，然后生成HTML，同Client Bundle一起生成发送到客户端。
 ### 下面就来实践一下Nuxt.js吧
-#### 先来安装创建项目
+#### 首先安装创建项目
 官方提供了几个模板，下面以starter模板为例，方便我们使用，可以直接下载[模板压缩包](https://github.com/nuxt-community/starter-template/archive/master.zip)，也可以使用vue-cli安装，下面是vue-cli安装步骤：
 ```bash
     # 安装vue-cli
@@ -26,9 +26,10 @@ asyncData方法就是在Node Server中执行，服务器bundle中来处理的。
 ``` 
 当然，你也可以自己从头开始创建一个全新的项目，这里就不多说，只是个人觉着starter模板用着真的很方便，目录结构特别清晰，也很符合我们平时的命名习惯和规则~~~
 #### 目录结构
-![目录结构](/_doc_img/catalog.png)
+starter模板已经根据平时的命名习惯给创建好了目录，看下图就是starter模板给生成的：  
+![目录结构](/_doc_img/catalog.png)  
 #### 配置
-Nuxt.js的默认配置涵盖了大部分的场景，也可在nuxt.config.js中覆盖默认配置项，下面就说几个常用的配置属性。
+项目创建好了，总得要按照我们的编码习惯和需求来对项目进行配置。其实Nuxt.js的默认配置涵盖了大部分的场景，可以在nuxt.config.js中覆盖默认配置项，下面就说几个常用的配置属性。
 ###### HTML头部标签
 可以在nuxt.config.js配置统一的头部标签，常用的title、meta、script标签
 ```bash
@@ -45,7 +46,7 @@ Nuxt.js的默认配置涵盖了大部分的场景，也可在nuxt.config.js中�
         __dangerouslyDisableSanitizers: ['script']  // 不对<script>标签中内容做转义处理
     }
 ```
-也可以在某页面的文件下配置，例如修改页面title
+也可以在某页面的vue文件下配置，例如修改页面title
 ```bash
     head() {
         // 个性化设置head
@@ -79,10 +80,10 @@ Nuxt.js的默认配置涵盖了大部分的场景，也可在nuxt.config.js中�
     ]
 ```
 #### 路由
-这可是Nuxt.js的一个亮点。它可以根据pages目录结构，自动生成路由配置。
-假设pages的结构是下边这样的：
-![pages截图](/_doc_img/pages.png)
-则会自动生成路由配置：
+项目创建好了，页面配置也有了，但是路由我们还没配置呢，但是在Nuxt.js中，这个可以说是不需要我们再专门设置了，它可以根据pages目录结构，自动生成路由配置。
+假设pages的结构是下边这样的：  
+![pages截图](/_doc_img/pages.png)  
+Nuxt.js会自动生成下面这样的路由配置：
 ```bash
     router: {
         routes: [
@@ -105,9 +106,9 @@ Nuxt.js的默认配置涵盖了大部分的场景，也可在nuxt.config.js中�
     }
 ```
 #### 嵌套路由
-创建与该文件同名的目录存放子视图的组件。
-![嵌套pages](/_doc_img/pages_child.png)
-自动生成的路由
+我们的页面肯定不能都是根目录的页面的，所以会需要嵌套路由。在Nuxt.js中只需要创建与该文件同名的目录存放子视图的组件就可以了。看下图目录结构：  
+![嵌套pages](/_doc_img/pages_child.png)  
+自动生成的嵌套路由
 ```bash
     router: {
         routes: [
@@ -131,7 +132,12 @@ Nuxt.js的默认配置涵盖了大部分的场景，也可在nuxt.config.js中�
     }
 ```
     不要忘记了要在父级的vue文件中增加<nuxt-child/>来显示子视图的内容。
-#### 定制默认模板
+<br />
+<br />
+<br />
+
+*终于配置完了，可以来写产品提的需求了，可是想想基本整个项目的整体大结构都是一样的，尤其头尾每个页面都一模一样的。其实Nuxt.js已经为我们准备好了，我们可以在Nuxt.js的结构上修改成我们需要的结构。下边就来看看我们的模板怎么做吧~*
+#### 想要定制默认模板
 只需要在根目录下创建app.html文件即可。
 默认模板是：
 ```bash
@@ -153,7 +159,7 @@ Nuxt.js的默认配置涵盖了大部分的场景，也可在nuxt.config.js中�
     </template>
 ```
 pages文件夹下的vue文件中的内容会插入在<nuxt/>中。
-你也可以修改此文件来扩展应用的默认布局。
+你也可以修改此文件来扩展应用的默认布局，像下边这样，加上每个页面都有的头部和尾部。
 ```bash
     <template>
         <div>
@@ -172,11 +178,11 @@ pages文件夹下的vue文件中的内容会插入在<nuxt/>中。
         };
     </script>
 ```
-生成页面的结构如下图：
-![布局](/_doc_img/layout.png)
+生成页面的结构如下图：  
+![布局](/_doc_img/layout.png)  
 从外到内依次是layouts布局、pages页面、components组件
 #### 自定义布局
-如果想要某一个页面不走默认布局，可以在layouts文件夹下新建布局模板，然后该页面的vue文件中配置layouts，引入此布局模板。
+一整个项目那么多页面，总会有一两个页面不按常理出牌的，我们可以在layouts文件夹下新建布局模板，然后这一两个页面的vue文件中配置layouts，引入此布局模板就可以了。
 ```bash
     # layouts文件夹下的布局模板layout_one.vue
     <template>
@@ -190,14 +196,15 @@ pages文件夹下的vue文件中的内容会插入在<nuxt/>中。
     }
 ```
 #### 错误页面
-可以通过编辑layouts/error.vue文件定制错误页面的样式。一般可以在404,500等错误页面的时候展示。
+若是某个页面跳转不小心些错了怎么办？或者某个还在用的vue文件不小心给删了怎么办？写了那么完美的代码，怎么可以容忍呢~~
+可以通过编辑layouts/error.vue文件定制错误页面的样式。一般在404,500等错误页面的时候会自动加载error.vue文件。
 #### 异步数据
-这里就是开头说的nuxt.js中的asyncData的方法，这个方法是在组件加载之前调用，可以在服务端或者路由更新之前调用。使得我们可以在设置组件的数据之前异步获取或处理数据。
+说了那么多，终于到开头说的nuxt.js中的asyncData的方法，这个方法是在组件加载之前调用，可以在服务端或者路由更新之前调用。使得我们可以在设置组件的数据之前异步获取或处理数据。
 此方法有两个参数，第一个是当前页的上下文对象，可以用来获取数据；第二个参数可以指定回调函数。
 需要注意一点的是我们也就不可以通过this来引用组件的实例对象了，由于是服务端运行，所以也是不存在document、window这些变量的。
 ```bash
     export default {
-        async asyncData ({isServer,query}) {
+        async asyncData ({isServer,query},callback) {
             let { data } = await axios.get(`https://58.com/api/${query.id}`);
             return { 
                 ID: query.id || '00'
@@ -206,9 +213,12 @@ pages文件夹下的vue文件中的内容会插入在<nuxt/>中。
     }
 ```
 上下文对象context可用的属性看[官方的文档](https://zh.nuxtjs.org/api/)吧
+<br />
+<br />
+*有上边的，项目都已经可以用了，但是我们总是会想要更好一些的效果，比如不需要编译的文件与需要编译的文件区分开，不要多次打包加载公共插件，那就再继续看看下边的吧*
 #### 资源文件
-默认Nuxt会使用webpack的插件vue-loader、file-loader、url-loader来处理文件的加载和引用。
-对于不需要处理的静态文件，放在static目录中。Nuxt启动后，该目录下的文件会映射到此应用的根路径下，所以在代码中可用使用根路径 / 结合资源相对路径来引用静态不需要处理的文件。
+Nuxt默认会使用webpack的插件vue-loader、file-loader、url-loader来处理文件的加载和引用。
+对于不需要处理的静态文件，放在static目录中即可。Nuxt启动后，该目录下的文件会映射到此应用的根路径下，所以在代码中是可以用根路径 / 和资源相对路径来引用静态不需要处理的文件。
 ```bash
     # 引用 static 目录下的图片
     <img src="/test-img.png"/>
@@ -219,8 +229,9 @@ pages文件夹下的vue文件中的内容会插入在<nuxt/>中。
     <img src="/assets/test-img-2.png"/>
 ```
 #### 插件
+有哪个项目是不没有引入外部插件的，即便有，也绝对少不了自己写的公共插件的，来看看各种类型的插件怎么使用的吧。
 ###### 第三方模块
-以axios为例，首先需要安装npm包
+以vue官方推荐的HTTP库axios为例：
 ```bash
     # 安装axios
     npm install axios
@@ -248,7 +259,7 @@ pages文件夹下的vue文件中的内容会插入在<nuxt/>中。
     # 安装vue-notifyjs
     npm install vue-notifyjs
     
-    #在plugins文件夹下新建js文件 vue-notify.js，文件内容如下：
+    #在plugins文件夹下新建js文件 vue-notify.js，文件内容如下，其实就是插件的引入和基本的配置初始化
     import Vue from 'vue';
     import Notify from 'vue-notifyjs';
     import '../node_modules/vue-notifyjs/themes/default.css'
@@ -293,7 +304,7 @@ pages文件夹下的vue文件中的内容会插入在<nuxt/>中。
     </script>
 ```
 #### 添加预处理器
-以引入scss预处理器为例：
+现在有很多前端的扩展语言例如scss、less等，以引入scss预处理器为例：
 ```bash
     # 首先当然是安装包了
     npm install node-sass sass-loader --save-dev
@@ -309,12 +320,12 @@ pages文件夹下的vue文件中的内容会插入在<nuxt/>中。
     </style>
 ```
 scss文件是需要webpack编译处理的文件，所以要放到assets目录下。
-#### 最后，当然得部署服务器了
-###### nuxt
-启动一个热加载的Web服务器（开发模式） localhost:3000。本地开发时用
-###### nuxt build
-利用webpack编译应用，压缩JS和CSS资源
-###### nuxt start
-以生成模式启动一个Web服务器 (需要先执行nuxt build)，  服务端渲染应用部署时用
-###### nuxt generate
-编译应用，并依据路由配置生成对应的HTML文件 (用于静态站点的部署)。  静态应用部署时用，会创建dist文件夹，是所有静态化后的资源文件。
+<br />
+<br />
+#### 代码写完了，当然得部署服务器了
+Nuxt.js提供了下面的四个命令，可以放到package.json中来启动。
+**nuxt**：启动一个热加载的Web服务器（开发模式） localhost:3000。本地开发时用
+**nuxt build**：利用webpack编译应用，压缩JS和CSS资源
+**nuxt start**：以生成模式启动一个Web服务器 (需要先执行nuxt build)，  服务端渲染应用部署时用
+**nuxt generate**：编译应用，并依据路由配置生成对应的HTML文件 (用于静态站点的部署)。  静态应用部署时用，会创建dist文件夹，是所有静态化后的资源文件。
+至于是选择静态应用部署还是服务端渲染应用部署，那就得要看你的项目实际需求了。
